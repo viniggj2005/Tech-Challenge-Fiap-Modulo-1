@@ -9,5 +9,4 @@ def scraping_init():
     categories=get_category_and_his_link(content)
     books=get_books(categories)
     array_to_csv(books)
-    print(books)
     return content

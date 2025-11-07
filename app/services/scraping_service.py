@@ -35,7 +35,6 @@ def array_to_csv(books: List[BookModel]):
     file_path = os.path.join(data_dir, "data.csv")
     df = pd.DataFrame(books)
     df.to_csv(file_path, index=False, sep=";")
-    print(f"Arquivo salvo em: {file_path}")
 
 
 def get_books(content=List[ScrapedLinkAndCategory]):

@@ -3,7 +3,7 @@ from app.services.scraping_service import get_web_content,get_category_and_his_l
 router = APIRouter(prefix="/scraping", tags=["Scraping"])
 
 
-@router.get("/init")
+@router.get("/trigger")
 def scraping_init():
     content=get_web_content("https://books.toscrape.com/")
     categories=get_category_and_his_link(content)

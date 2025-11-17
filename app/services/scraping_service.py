@@ -48,6 +48,9 @@ def get_books(content=List[ScrapedLinkAndCategory]):
                 for index in range(2,int(pages[-1])+1):
                     page_content=get_web_content(f"{BASE_URL}/{scraped['link']}page-{index}.html")
                     books_array+=get_book_content(page_content,scraped["category"])
+    books_array=[
+        {**row, "id": index+1}
+        for index,row in enumerate(books_array) ]
     return books_array
 
 

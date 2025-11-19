@@ -1,15 +1,21 @@
-import os
 import re
 import requests
-import pandas as pd
 from typing import List
 from bs4 import BeautifulSoup
 from app.schemas.book import BookModel
+from app.services.data_service import array_to_csv
 from app.schemas.scraping import ScrapedLinkAndCategory
 
 
 BASE_URL="https://books.toscrape.com"
 rating={"one":1,"two":2,"three":3,"four":4,"five":5}
+
+def scraping_trigger(link:str):
+    content=get_web_content(link)
+    categories=get_category_and_his_link(content)
+    books=get_books(categories)
+    array_to_csv(books)
+    return content
 
 def get_link_without_page(link):
     return re.split("index.html", link)[0]
@@ -26,16 +32,6 @@ def get_category_and_his_link(content):
         for li in item.ul.find_all("li"):
             result.append({"link":get_link_without_page(li.a['href']),"category":li.get_text(strip=True)})
     return result
-
-def array_to_csv(books: List[BookModel]):
-    base_dir = os.path.dirname(os.path.dirname(__file__))  
-    data_dir = os.path.join(base_dir, "data")
-    os.makedirs(data_dir, exist_ok=True)
-
-    file_path = os.path.join(data_dir, "data.csv")
-    df = pd.DataFrame(books)
-    df.to_csv(file_path, index=False, sep=";")
-
 
 def get_books(content=List[ScrapedLinkAndCategory]):
     books_array:List[BookModel]=[]

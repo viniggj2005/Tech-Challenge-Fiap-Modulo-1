@@ -1,12 +1,13 @@
 from fastapi import APIRouter
-from app.services.scraping_service import get_web_content,get_category_and_his_link,get_books,array_to_csv
-router = APIRouter(prefix="/scraping", tags=["Scraping"])
+from fastapi import HTTPException,status
+from app.services.scraping_service import scraping_trigger
 
+router = APIRouter(prefix="/scraping", tags=["Scraping"])
 
 @router.get("/trigger")
 def scraping_init():
-    content=get_web_content("https://books.toscrape.com/")
-    categories=get_category_and_his_link(content)
-    books=get_books(categories)
-    array_to_csv(books)
-    return content
+    content=scraping_trigger("https://books.toscrape.com/")
+    if content:
+        return{"message":"Sucesso ao realizar o scrap dos livros!"}
+    else:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,detail="Falha ao realizar o web scrap dos livros!")

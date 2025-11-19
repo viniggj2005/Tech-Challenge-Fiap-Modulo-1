@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.api.v1.routes import books, scraping, categories,authentication
+from app.api.v1.routes import books, scraping, categories, authentication
 
 app = FastAPI(title="Tech Challenge Módulo 1", version="1.0.0")
 

@@ -2,5 +2,9 @@ from pydantic import BaseModel
 
 
 class LoginModel(BaseModel):
-    username:str
-    username:str
+    username: str
+    password: str
+
+
+class RefreshTokenModel(BaseModel):
+    refresh_token: str

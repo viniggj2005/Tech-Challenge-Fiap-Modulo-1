@@ -1,0 +1,27 @@
+[project]
+name = "tech-challenge-fiap-modulo-1"
+version = "0.0.1"
+description = "Projeto tech challenge do módulo 1  da pós tech fiap"
+authors = [
+    {name = "Vinicius Gabriel Graupmann Juraszek",email = "102488557+viniggj2005@users.noreply.github.com"}
+]
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = [
+    "E203",  
+]
+
+[dependency-groups]
+dev = [
+    "flake8 (>=7.3.0,<8.0.0)"
+]

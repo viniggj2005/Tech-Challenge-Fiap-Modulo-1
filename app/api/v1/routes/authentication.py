@@ -15,7 +15,7 @@ async def login(body: LoginModel):
 
 
 @router.get("/user-info")
-async def read_users_me(current_user: dict = Depends(get_current_user)):
+async def read_user_info(current_user: dict = Depends(get_current_user)):
     return current_user
 
 

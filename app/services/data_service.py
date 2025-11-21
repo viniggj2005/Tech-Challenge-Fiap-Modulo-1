@@ -34,3 +34,21 @@ def array_to_csv(books: List[BookModel]):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Erro ao salvar arquivo csv. erro:{str(e)}",
         )
+
+
+def check_data_connection():
+    try:
+        data = get_csv_data()
+    except HTTPException as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="A Api não está saudável,O arquivo de dados está inacessível. Rode o trigger do webscraper."
+        )
+
+    if data.empty:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="A Api não está saudável,O arquivo foi encontrado, mas está vazio. Rode o trigger novamente!"
+        )
+
+    return True

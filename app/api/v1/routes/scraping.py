@@ -1,11 +1,12 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from fastapi import HTTPException, status
 from app.services.scraping_service import scraping_trigger
+from app.services.jwt_authentication_service import get_current_user
 
 router = APIRouter(prefix="/scraping", tags=["Scraping"])
 
 
-@router.get("/trigger")
+@router.get("/trigger",dependencies=[Depends(get_current_user)])
 def scraping_init():
     content = scraping_trigger("https://books.toscrape.com/")
     if content:

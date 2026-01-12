@@ -46,7 +46,7 @@ def get_category_and_his_link(content):
 def get_books(content=List[ScrapedLinkAndCategory]):
     books_array: List[BookModel] = []
     for scraped in content:
-        first_page_content = get_web_content(f"{BASE_URL}/{scraped["link"]}index.html")
+        first_page_content = get_web_content(f"{BASE_URL}/{scraped['link']}index.html")
         books_array += get_book_content(first_page_content, scraped["category"])
         for item in BeautifulSoup(first_page_content, "html.parser").find_all(
             "li", class_="current"

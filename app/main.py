@@ -1,5 +1,9 @@
 from fastapi import FastAPI
+from app.models.book import Book
+from app.services.db_service import engine, Base
 from app.api.v1.routes import books, health, ml, scraping, categories, authentication, stats
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Tech Challenge Módulo 1", version="1.0.0", redoc_url=None)
 

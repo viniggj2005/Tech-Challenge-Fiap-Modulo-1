@@ -1,10 +1,4 @@
-
-
-
-
-
-
-from app.services.data_service import get_csv_data
+from app.services.data_service import get_csv_data,get_db_data
 
 availability={"In stock":0}
 categories={'Travel':0, 'Mystery':1, 'Historical Fiction':2,'Sequential Art':3,'Classics':4,
@@ -17,9 +11,10 @@ categories={'Travel':0, 'Mystery':1, 'Historical Fiction':2,'Sequential Art':3,'
  'Spirituality':37, 'Academic':38, 'Self Help':39, 'Historical':40, 'Christian':41, 'Suspense':42,
  'Short Stories':43, 'Novels':44, 'Health':45, 'Politics':46, 'Cultural':47, 'Erotica':48, 'Crime':49}
 def get_data_for_features():
-    data=get_csv_data()
+    # data=get_csv_data()
+    data=get_db_data()
     data=data.drop(columns=["image","title","id"])
-    print(data["category"].unique())
+    # print(data["category"].unique())
     data["availability"] = data["availability"].map(availability)
     data["category"]=data["category"].map(categories)
 

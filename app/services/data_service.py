@@ -1,9 +1,10 @@
 import os
 import pandas as pd
 from typing import List
+from app.models.book import Book
 from app.schemas.book import BookModel
 from fastapi import HTTPException, status
-
+from app.services.db_service import SessionLocal
 
 def get_csv_data():
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -18,6 +19,41 @@ def get_csv_data():
 
     return pd.read_csv(csv_path, sep=";")
 
+
+
+
+def get_db_data():
+    db = SessionLocal()
+    try:
+        return pd.read_sql(db.query(Book).statement, db.bind)
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Erro ao buscar dados no banco de dados. erro:{str(e)}",
+        )
+    finally:
+        db.close()
+
+def array_to_db(books: List[BookModel]):
+    db = SessionLocal()
+    try:
+        books_db = []
+        for book in books:
+            if isinstance(book, dict):
+                books_db.append(Book(**book))
+            else:
+                books_db.append(Book(**book.model_dump()))
+        db.add_all(books_db)
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Erro ao salvar dados no banco de dados. erro:{str(e)}",
+        )
+    finally:
+        db.close()
+    
 
 def array_to_csv(books: List[BookModel]):
     try:

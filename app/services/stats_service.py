@@ -1,8 +1,8 @@
-from app.services.data_service import get_csv_data
-
+from app.services.data_service import get_csv_data,get_db_data
 
 def categories_stats():
-    data=get_csv_data()
+    #data=get_csv_data()
+    data=get_db_data()
     stats = (
     data.groupby("category")
     .agg(
@@ -17,7 +17,8 @@ def categories_stats():
 
 
 def dataset_stats():
-    data = get_csv_data()
+    #data = get_csv_data()
+    data=get_db_data()
 
     stats = {
         "mean_price": float(round(data["price"].mean(), 2)),

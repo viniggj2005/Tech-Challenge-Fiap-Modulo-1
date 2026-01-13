@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter
 from fastapi import HTTPException, status
 
 from app.services.stats_service import categories_stats, dataset_stats

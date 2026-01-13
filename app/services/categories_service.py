@@ -1,10 +1,11 @@
 import pandas as pd
 from fastapi import HTTPException, status
-from app.services.data_service import get_csv_data
+from app.services.data_service import get_csv_data,get_db_data  
 
 
 def get_all_categories():
-    data = get_csv_data()
+    # data = get_csv_data()
+    data = get_db_data()
     result = data["category"].unique()
     if len(result) == 0:
         raise HTTPException(

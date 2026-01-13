@@ -3,8 +3,8 @@ import requests
 from typing import List
 from bs4 import BeautifulSoup
 from app.schemas.book import BookModel
-from app.services.data_service import array_to_csv
 from app.schemas.scraping import ScrapedLinkAndCategory
+from app.services.data_service import array_to_csv,array_to_db,get_db_data
 
 
 BASE_URL = "https://books.toscrape.com"
@@ -15,7 +15,8 @@ def scraping_trigger(link: str):
     content = get_web_content(link)
     categories = get_category_and_his_link(content)
     books = get_books(categories)
-    array_to_csv(books)
+    #array_to_csv(books)
+    array_to_db(books)
     return content
 
 

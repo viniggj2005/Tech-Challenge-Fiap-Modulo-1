@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 from typing import List
+from sqlalchemy import text
 from app.models.book import Book
 from app.schemas.book import BookModel
 from fastapi import HTTPException, status
@@ -19,9 +20,6 @@ def get_csv_data():
 
     return pd.read_csv(csv_path, sep=";")
 
-
-
-
 def get_db_data():
     db = SessionLocal()
     try:
@@ -37,6 +35,10 @@ def get_db_data():
 def array_to_db(books: List[BookModel]):
     db = SessionLocal()
     try:
+        db.query(Book).delete()
+        db.execute(text("ALTER SEQUENCE books_id_seq RESTART WITH 1"))
+        db.commit()
+
         books_db = []
         for book in books:
             if isinstance(book, dict):
@@ -54,7 +56,6 @@ def array_to_db(books: List[BookModel]):
     finally:
         db.close()
     
-
 def array_to_csv(books: List[BookModel]):
     try:
         base_dir = os.path.dirname(os.path.dirname(__file__))
@@ -70,7 +71,6 @@ def array_to_csv(books: List[BookModel]):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Erro ao salvar arquivo csv. erro:{str(e)}",
         )
-
 
 def check_data_connection():
     try:

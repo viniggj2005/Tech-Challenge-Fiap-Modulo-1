@@ -1,6 +1,11 @@
+
 # Tech Challenge - Fase 1 - Machine Learning Engineering
 
 Este repositório contém o projeto do Tech Challenge da Fase 1 da Pós-Tech FIAP (Machine Learning Engineering). O objetivo é desenvolver uma API pública para consulta de livros, incluindo um pipeline de ingestão de dados (web scraping) e preparação para modelos de Machine Learning.
+
+## Link do Video da apresentação
+
+Apresentação **: [http://www.youtube.com/(http://www.youtube.com)
 
 ## Descrição do Projeto
 
@@ -15,12 +20,19 @@ O projeto consiste em uma aplicação completa que realiza:
 O fluxo de dados segue a arquitetura:
 **Ingestão/Scraping** → **Processamento/Armazenamento (CSV)** → **API (FastAPI)** → **Consumo (Cliente/ML)**
 
+**Diagrama Macro**
+
+![Diagrama Macro](Scrap-Macro-Diagram.drawio.svg)
+
+**Diagrama Arquitetura**
+
 ![Diagrama da Arquitetura](diagrama.svg)
 
 ## Instalação e Configuração
 
 ### Pré-requisitos
 - Python 3.11 ou superior
+- PostgreSQL 16.11
 
 ### Passos para Instalação
 
@@ -53,13 +65,13 @@ Para iniciar o servidor da API, execute o comando:
 uvicorn app.main:app --reload
 ```
 
-A API estará acessível em: `http://127.0.0.1:8000`
+A API estará acessível em: `http://projeto1.cec.dev.br:8000`
 
 ## Documentação da API
 
 A documentação interativa (Swagger UI) pode ser acessada em:
-- **Swagger UI**: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-- **ReDoc**: [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
+- **Swagger UI**: [http://projeto1.cec.dev.br:8000/docs](http://projeto1.cec.dev.br:8000/docs)
+- **ReDoc**: [http://projeto1.cec.dev.br:8000/redoc](http://projeto1.cec.dev.br:8000/redoc)
 
 ### Principais Endpoints
 
@@ -92,7 +104,7 @@ A documentação interativa (Swagger UI) pode ser acessada em:
 
 O diagrama `diagrama.svg` presente no repositório representa fielmente a arquitetura implementada:
 1.  O serviço de scraping coleta os dados.
-2.  Os dados persistidos (CSV) são carregados pelo Data Service.
+2.  Os dados persistidos serão carregados pelo Data Service e armazenados no Banco de dados Postgree SQL.
 3.  A API FastAPI expõe esses dados.
 4.  Existem saídas claras para Consumo Geral e Treinamento de ML.
 
